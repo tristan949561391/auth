@@ -5,8 +5,12 @@ var commonUtil = require('../util/commonUtil')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('index', {title: 'Express'});
+    var session = req.session
+    var time = session.time
+    session.time = new Date()
+    res.render('index', {time: time});
 });
+
 
 router.post('/register', function (req, res, next) {
     var username = req.body.username

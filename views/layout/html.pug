@@ -1,0 +1,13 @@
+doctype html
+html
+    head
+        -if (title!=null)
+          title=title
+        -else
+          title Moondust
+        meta( charset="UTF-8")
+        meta( name="viewport" content="width=device-width, initial-scale=1")
+        link(href='/favicon.svg',rel='shortcut icon',sizes='any')
+        block head
+    body
+        block body

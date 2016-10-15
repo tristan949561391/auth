@@ -1,0 +1,26 @@
+{
+  "server": {
+    "port": 8080
+  },
+  "session":{
+    "host":"172.82.183.154",
+    "port":21358,
+    "db":2,
+    "prefix":"session:"
+  },
+  "cookie": {
+    "domain": "moondust.cc",
+    "maxAge": 3600000,
+    "path":"/",
+    "httpOnly":false
+  },
+  "redis": {
+    "url": "172.82.183.154",
+    "port": 21358
+  },
+  "mongo": {
+    "url": "mongodb://172.82.183.154",
+    "port": 57471,
+    "db": "moondust"
+  }
+}
