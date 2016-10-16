@@ -1,0 +1,68 @@
+var fs = require('fs');
+var path = require('path')
+
+var outPath = 'build/content'
+var configDefaule = {
+    ignore: [
+        'node_modules',
+        'build'
+    ]
+}
+
+fs.mkdir(outPath, function () {
+    var filePath = path.resolve();
+    var toFilePath = path.join(filePath, outPath)
+    buildOutWebContent(filePath, toFilePath)
+})
+
+
+function buildOutWebContent(filePath, toFilePath) {
+    var files = fs.readdirSync(filePath)
+    files.forEach(function (fileName, index) {
+        var theFile = path.join(filePath, fileName)
+        var toFile = path.join(toFilePath, fileName)
+        if (haveToCopy(theFile, fileName)) {
+            if (!fs.statSync(theFile).isDirectory()) {
+                copyFile(theFile, toFile)
+            } else {
+                fs.mkdir(toFile, function () {
+                    buildOutWebContent(theFile, toFile)
+                })
+            }
+        }
+    })
+}
+
+
+function copyFile(from, to) {
+    fs.readFile(from, function (err, data) {
+        fs.writeFile(to, data, function (error) {
+            if (error) {
+                console.error('>copy ' + from + ' ' + to + ' error ')
+                console.error('>--because ' + error.message)
+            } else {
+                console.log('>copy ' + from + ' ' + to + ' ok')
+            }
+        })
+
+    })
+}
+
+
+function haveToCopy(filePath, filename) {
+    if (filename.indexOf('.') == 0) {
+        return false
+    }
+    for (var i in configDefaule.ignore) {
+        if (configDefaule.ignore[i] == filename) {
+            return false
+            break
+        }
+    }
+
+    return true
+}
+
+
+
+

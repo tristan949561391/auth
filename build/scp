@@ -1,5 +1,0 @@
-var exec = require('child_process').exec;
-var npminstall = exec('npm install');
-npminstall.stdout.on('data', function (data) {
-    console.log('标准输出：' + data);
-});
