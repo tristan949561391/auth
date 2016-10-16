@@ -55,8 +55,6 @@ router.post('/grant', function (req, res, next) {
         err.status = 342
         next(err)
     }
-
-
 })
 
 

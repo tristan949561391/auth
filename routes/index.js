@@ -14,6 +14,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/register', function (req, res, next) {
     var username = req.body.username
+
     var password = req.body.password
     if (commonUtil.NOTNULL(username) && commonUtil.NOTNULL(password)) {
         userService.register(username, password, function (err) {
@@ -30,6 +31,22 @@ router.post('/register', function (req, res, next) {
     err.status = 462
     next(err)
 })
+
+
+router.get('/login', function (req, res, next) {
+    res.render('login', {});
+})
+
+
+router.post('/login', function (req, res, next) {
+    var username = req.body.username
+    var password = req.body.password
+    var session=req.session
+    session.princple=username
+    console.log(username + password)
+    res.send(username + ':' + password)
+})
+
 
 module.exports = router;
 

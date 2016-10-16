@@ -1,0 +1,40 @@
+var fs = require('fs');
+var path = require('path')
+fs.mkdir('build/out', function () {
+    console.log('mkdir build success')
+    var filePath = path.resolve();
+    listFile(filePath)
+})
+
+
+function listFile(filePath) {
+    var files = fs.readdirSync(filePath)
+    files.forEach(function (fileName, index) {
+        var theFile = path.join(filePath, fileName)
+        if (!fs.statSync(theFile).isDirectory()) {
+            copyFile(theFile)
+        } else {
+            if (!theFile.endsWith('build')) {
+                listFile(theFile)
+            }
+        }
+    })
+}
+
+
+function copyFile(src) {
+    var dst = src.replace(path.resolve(), path.join(path.resolve(), "build/out"))
+    fs.readFile(src, function (err, data) {
+        fs.writeFile(dst, data, function (error) {
+            if (error) {
+                console.error('>copy ' + src + ' ' + dst + ' error ')
+                console.error('>--because ' + error.message)
+            } else {
+                console.log('>copy ' + src + ' ' + dst + ' ok')
+            }
+        })
+
+    })
+}
+
+
