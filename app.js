@@ -17,6 +17,8 @@ var checkLogin = require('./service/oauthService').checkLogin
 var app = express();
 
 
+// app的配置 －－－start
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -35,8 +37,25 @@ app.use(session({
     saveUninitialized: false,
     cookie: config.cookie
 }));
-app.use(require('node-compass')({mode: 'expanded'}));
+
 app.use(express.static(path.join(__dirname, 'public')));
+
+// app的配置 －－－end
+
+
+//app内置对象－－－－start
+app.locals.title = 'Moondust'
+
+
+//app内置对象－－－－end
+
+
+app.use(function (req, res, next) {
+    res.locals.session = req.session;
+    res.locals.cookies = req.cookies
+    next();
+});
+
 
 app.use('/', home);
 app.use('/', checkLogin, index);
@@ -59,6 +78,7 @@ app.use(function (err, req, res, next) {
         res.send(err.message || 'unKnow Error')
         return
     }
+
     res.render('error/error', {
         message: err.message,
         error: err

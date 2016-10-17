@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "forever":"forever start ./bin/www",
+    "forever": "forever start ./bin/www",
     "start": "node ./bin/www",
     "clean": "node ./bin/clean",
     "build": " node ./bin/build",
@@ -25,7 +25,7 @@
     "redis": "^2.6.2"
   },
   "devDependencies": {
-    "node-compass": "0.2.3",
-    "scp2": "^0.5.0"
+    "scp2": "^0.5.0",
+    "tar.gz": "^1.0.5"
   }
 }
