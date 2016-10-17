@@ -1,0 +1,15 @@
+var client = require('scp2')
+var t = 'build/auth.tar.gz'
+client.scp(t, {
+    host: '172.82.183.154',
+    port:53322,
+    username: 'root',
+    password: 'tristan201314',
+    path: '/www'
+}, function (err) {
+    if (err) {
+        console.error(err.message)
+        return
+    }
+    console.info('scp success')
+})

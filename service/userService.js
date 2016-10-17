@@ -20,3 +20,9 @@ function register(username, password, callback) {
     })
 }
 module.exports.register = register
+
+
+function loginUser(username, password, callback) {
+    userModel.findOne({username: username, password: password}, callback)
+}
+module.exports.loginUser=loginUser

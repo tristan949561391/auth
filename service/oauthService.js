@@ -4,6 +4,7 @@
 var userModel = require('../modes/mode_user')
 var clientModel = require('../modes/mode_client')
 var redisClient = require('../catch/redisclient')
+var commonUtil = require('../util/commonUtil')
 var uuid = require('node-uuid')
 var crypto = require('crypto')
 
@@ -106,3 +107,43 @@ function grantByPassword(clientSecret, code, password, callback) {
 }
 
 module.exports.grantByPassword = grantByPassword
+
+function checkLogin(req, res, next) {
+    //先验证session
+    var session = req.session
+    if (session != null && session.principle != null && session.principle != '') {
+        //验证session通过
+        next()
+        return
+    }
+    //没有session
+    var token = req.headers['sign'] || req.query.access_token || req.body.access_token
+    if (token == null || token == '') {
+        doForAuthError(req, res, next)
+        return
+    }
+    redisClient.select(1, function () {
+        redisClient.get('access_token:' + token, function (err, data) {
+            if (data != null) {
+                next()
+                return
+            }
+            doForAuthError(req, res, next)
+            return
+        })
+    })
+}
+
+module.exports.checkLogin = checkLogin
+
+
+function doForAuthError(req, res, next) {
+    if (require('../util/commonUtil').NOTNULL(req.headers["content-type"]) && req.headers["content-type"].indexOf('application/json') == 0) {
+        var err = new Error('auth error')
+        err.status = 578
+        next(err)
+        return
+    }
+    res.redirect('/login')
+}
+

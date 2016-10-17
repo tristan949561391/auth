@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path')
 
-var outPath = 'build/content'
+var outPath = 'build/auth'
 
 
 function build(config) {
@@ -14,6 +14,7 @@ function build(config) {
             '*.sass'
         ]
     }
+
     fs.mkdir(outPath, function () {
         var filePath = path.resolve();
         var toFilePath = path.join(filePath, outPath)
@@ -44,8 +45,8 @@ function build(config) {
             if (from.indexOf('package.json') >= 0) {
                 var package = JSON.parse(data);
                 delete package['devDependencies'];
+                data = JSON.stringify(package)
             }
-            data = JSON.stringify(package)
             fs.writeFile(to, data, function (error) {
                 if (error) {
                     console.error('>copy ' + from + ' ' + to + ' error ')

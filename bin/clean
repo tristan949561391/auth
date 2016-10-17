@@ -1,7 +1,7 @@
 var fs=require('fs')
 
 
-var toCleanPath='build/content'
+var toCleanPath='build/auth'
 
 var deleteFolderRecursive = function(path) {
 

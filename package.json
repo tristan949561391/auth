@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "forever":"forever start ./bin/www",
     "start": "node ./bin/www",
-    "scp": "node ./bin/scp",
     "clean": "node ./bin/clean",
     "build": " node ./bin/build",
-    "zip": " node ./bin/zip"
+    "zip": " node ./bin/zip",
+    "scp": "node ./bin/scp"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -19,11 +20,12 @@
     "express-session": "^1.14.1",
     "mongoose": "^4.6.3",
     "morgan": "~1.7.0",
-    "node-compass": "0.2.3",
     "node-uuid": "^1.4.7",
     "pug": "^2.0.0-beta6",
     "redis": "^2.6.2"
   },
   "devDependencies": {
+    "node-compass": "0.2.3",
+    "scp2": "^0.5.0"
   }
 }

@@ -6,11 +6,13 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 
-var routes = require('./routes/index');
+var index = require('./routes/index')
+var home = require('./routes/home');
 var users = require('./routes/users');
 var client = require('./routes/client');
 var oauth = require('./routes/oauth');
 var config = require('./config')
+var checkLogin = require('./service/oauthService').checkLogin
 
 var app = express();
 
@@ -36,9 +38,10 @@ app.use(session({
 app.use(require('node-compass')({mode: 'expanded'}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/client', client);
+app.use('/', home);
+app.use('/', checkLogin, index);
+app.use('/users', checkLogin, users);
+app.use('/client', checkLogin, client);
 app.use('/oauth', oauth);
 
 
