@@ -1,0 +1,11 @@
+var fs = require('fs');
+var targz = require('tar.gz');
+
+// Create all streams that we need
+var f='build/content'
+var t='build/content.tar.gz'
+var read = targz().createReadStream(f);
+var write = fs.createWriteStream(t);
+
+// Let the magic happen
+read.pipe(write);
