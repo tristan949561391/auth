@@ -138,7 +138,7 @@ module.exports.checkLogin = checkLogin
 
 
 function doForAuthError(req, res, next) {
-    if (require('../util/commonUtil').NOTNULL(req.headers["content-type"]) && req.headers["content-type"].indexOf('application/json') == 0) {
+    if (require('../util/commonUtil').NOTNULL(req.headers["content-type"]) && req.headers["content-type"].startsWith('application/json')) {
         var err = new Error('auth error')
         err.status = 578
         next(err)

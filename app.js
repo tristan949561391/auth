@@ -5,8 +5,8 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
+var compass = require('node-compass')
 
-var index = require('./routes/index')
 var home = require('./routes/home');
 var users = require('./routes/users');
 var client = require('./routes/client');
@@ -38,7 +38,8 @@ app.use(session({
     cookie: config.cookie
 }));
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/resource', express.static(path.join(__dirname, 'resource')));
+app.use(compass({project: path.join(__dirname, '/resource'), css: '', sass: '', mode: 'compact'}))
 
 // app的配置 －－－end
 
@@ -56,9 +57,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-
 app.use('/', home);
-app.use('/', checkLogin, index);
 app.use('/users', checkLogin, users);
 app.use('/client', checkLogin, client);
 app.use('/oauth', oauth);
@@ -73,8 +72,8 @@ app.use(function (req, res, next) {
 
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
-    if (require('./util/commonUtil').NOTNULL(req.headers["content-type"]) && req.headers["content-type"].indexOf('application/json') == 0) {
-        res.statusCode = err.status || 500
+    res.statusCode = err.status || 500
+    if (require('./util/commonUtil').NOTNULL(req.headers["content-type"]) && req.headers["content-type"].startsWith('application/json')) {
         res.send(err.message || 'unKnow Error')
         return
     }

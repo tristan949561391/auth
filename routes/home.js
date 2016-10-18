@@ -3,6 +3,13 @@ var router = express.Router();
 var userService = require('../service/userService')
 var commonUtil = require('../util/commonUtil')
 
+/* GET home page. */
+router.get('/', function (req, res, next) {
+    var session = req.session
+    var time = session.time
+    session.time = new Date()
+    res.render('index', {time: time});
+});
 
 
 router.post('/register', function (req, res, next) {
