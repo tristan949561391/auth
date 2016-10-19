@@ -3,39 +3,19 @@ block head
     link(rel='stylesheet', href='/resource/plugins/font-awesome/css/font-awesome.css')
     link(rel='stylesheet', href='/resource/stylesheets/form-elements.css')
     link(rel='stylesheet', href='/resource/stylesheets/style.css')
+    link(rel='stylesheet', href='/resource/plugins/loader/loaders.css')
     //if lt IE 9
       script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
       script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-    // Favicon and touch icons
-    link(rel='apple-touch-icon-precomposed', sizes='144x144', href='/resource/ico/apple-touch-icon-144-precomposed.png')
-    link(rel='apple-touch-icon-precomposed', sizes='114x114', href='/resource/ico/apple-touch-icon-114-precomposed.png')
-    link(rel='apple-touch-icon-precomposed', sizes='72x72', href='/resource/ico/apple-touch-icon-72-precomposed.png')
-    link(rel='apple-touch-icon-precomposed', href='/resource/ico/apple-touch-icon-57-precomposed.png')
 
 
 block body
-  .top-content
-    .inner-bg
-      .container
-        .row
-          .col-sm-8.col-sm-offset-2.text
-            h1
-              strong Moondust
-        .row
-          .col-sm-6.col-sm-offset-3.form-box
-            .form-top
-              .form-top-left
-                h3 欢迎登录
-                p 请输入您的用户名与密码进行登录:
-              .form-top-right
-                i.fa.fa-lock
-            .form-bottom
-              form.login-form(role='form', action='/login', method='post')
-                .form-group
-                  label.sr-only(for='form-username') Username
-                  input#form-username.form-username.form-control(type='text', name='username', placeholder='用户名...')
-                .form-group
-                  label.sr-only(for='form-password') Password
-                  input#form-password.form-password.form-control(type='password', name='password', placeholder='密码...')
-                button.btn(type='submit') 登录!
-
+    .login
+        include piece/loding
+block script
+    include layout/ngLib
+    script( src="/resource/process/login/systemjs.config.js")
+    script
+        | System.import('login').catch(function (err) {
+        | console.error(err);
+        | });

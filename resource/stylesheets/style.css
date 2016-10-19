@@ -1,12 +1,15 @@
-
 body {
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    font-weight: 300;
-    color: #888;
-    line-height: 30px;
-    text-align: center;
-	background-color: #341a0e;
-}
+  background-color: rgba(179, 179, 179, 0.42); }
 
+div.onloading {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background-color: #2b542c; }
+  div.onloading img {
+    width: 150px; }
 
+/*# sourceMappingURL=style.css.map */
