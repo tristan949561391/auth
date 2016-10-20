@@ -14,7 +14,9 @@ function build(config) {
             '*.scss',
             '*.js.map',
             '*.less',
-            '*.sass'
+            '*.sass',
+            'tsconfig.json',
+            'typings.json'
         ]
     }
 

@@ -1,5 +1,12 @@
 extends layout/html
 
 block body
-    h1= title
-    p Welcome to Moondust #{time}
+    .appliaction
+        include piece/loding
+block script
+    include layout/ngLib
+    script(src="/resource/process/systemjs.config.js")
+    script
+        | System.import('#{module}').catch(function (err) {
+        | console.error(err);
+        | });

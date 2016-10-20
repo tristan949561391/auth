@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
     var session = req.session
     var time = session.time
     session.time = new Date()
-    res.render('index', {time: time});
+    res.render('index', {module: 'index'});
 });
 
 
@@ -33,7 +33,7 @@ router.post('/register', function (req, res, next) {
 
 
 router.get('/login', function (req, res, next) {
-    res.render('login', {});
+    res.render('index', {module:'login'});
 })
 
 

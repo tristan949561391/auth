@@ -4,7 +4,7 @@
 import { Component } from '@angular/core';
 @Component({
     selector: '.appliaction',
-    templateUrl:'/resource/process/login/template/login.html'
+    templateUrl:'/resource/process/index/template/index.html'
 })
 export class AppComponent {
     name='Moondust'

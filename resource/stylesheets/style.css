@@ -2,14 +2,12 @@ body {
   background-color: rgba(179, 179, 179, 0.42); }
 
 div.onloading {
-  position: relative;
-  top: 0;
+  position: fixed;
+  top: 50%;
   left: 0;
   right: 0;
-  bottom: 0;
-  text-align: center;
-  background-color: #2b542c; }
+  text-align: center; }
   div.onloading img {
-    width: 150px; }
+    width: 100px; }
 
 /*# sourceMappingURL=style.css.map */
