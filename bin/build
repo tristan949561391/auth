@@ -9,7 +9,10 @@ function build(config) {
         ignore: [
             'node_modules',
             'build',
+            'typings',
+            '*.ts',
             '*.scss',
+            '*.js.map',
             '*.less',
             '*.sass'
         ]
@@ -60,7 +63,7 @@ function build(config) {
 
 
     function haveToCopy(filePath, filename) {
-        if (filename.indexOf('.') == 0) {
+        if (filename.startsWith('.')) {
             return false
         }
 
@@ -72,9 +75,9 @@ function build(config) {
                 return false
                 break
             }
-
-            if (filename.replace(filename.split('.')[0], '*') == configDefaule.ignore[i]) {
+            if(configDefaule.ignore[i].startsWith('*')&&filename.endsWith(configDefaule.ignore[i].replace('*',''))){
                 return false
+                break
             }
         }
 
