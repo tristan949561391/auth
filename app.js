@@ -41,7 +41,7 @@ app.use(session({
 app.use('/resource', express.static(path.join(__dirname, 'resource')));//process
 app.use('/process', express.static(path.join(__dirname, 'node_modules')));//process
 
-app.use(compass({project: path.join(__dirname, '/resource'), css: '', sass: '', mode: 'compact'}))
+app.use(compass({project: path.join(__dirname, '/resource'), css: '', sass: ''}))
 
 // app的配置 －－－end
 
