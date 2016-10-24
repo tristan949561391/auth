@@ -3,7 +3,7 @@
  */
 import { Component } from '@angular/core';
 @Component({
-    selector: '.appliaction',
+    selector: '.application',
     templateUrl:'/resource/process/index/template/index.html'
 })
 export class AppComponent {

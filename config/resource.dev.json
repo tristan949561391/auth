@@ -1,6 +1,6 @@
 {
   "server": {
-    "port": 80
+    "port": 8888
   },
   "session": {
     "host": "172.82.183.154",

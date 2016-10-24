@@ -33,27 +33,35 @@ router.post('/register', function (req, res, next) {
 
 
 router.get('/login', function (req, res, next) {
-    res.render('index', {module:'login'});
+    res.render('index', {module: 'login'});
 })
 
 
 router.post('/login', function (req, res, next) {
     var username = req.body.username
     var password = req.body.password
+    var toUrl = req.body.toUrl
     var session = req.session
     if (commonUtil.NOTNULL(username) && commonUtil.NOTNULL(password)) {
         userService.loginUser(username, password, function (err, user) {
             if (user != null) {
                 session.principle = user.id
                 session.user = user
-                res.redirect('/')
+                var resJson={
+                    toUrl:toUrl,
+                    username:username
+                }
+                res.send(resJson)
                 return
             }
-            res.redirect('/login?error=2')
+            next(err)
             return
         })
     } else {
-        res.redirect('/login?error=1')
+        var err = new Error('参数不合法')
+        err.status = 589
+        next(err)
+        return
     }
 
 })

@@ -23,6 +23,25 @@ module.exports.register = register
 
 
 function loginUser(username, password, callback) {
-    userModel.findOne({username: username, password: password}, callback)
+    userModel.findOne({username: username}, function (err,user) {
+        if(err){
+            callback(err)
+            return
+        }
+        if(user==null){
+            err=new Error('no such user')
+            err.status=463
+            callback(err)
+            return
+        }
+
+        if (password!=user.password){
+            err=new Error('password not match')
+            err.status=464
+            callback(err)
+            return
+        }
+        callback(null,user)
+    })
 }
 module.exports.loginUser=loginUser

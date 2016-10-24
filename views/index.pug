@@ -1,8 +1,9 @@
 extends layout/html
 
 block body
-    .appliaction
-        include piece/loding
+    .application
+        .loading
+            include piece/loding
 block script
     include layout/ngLib
     script(src="/resource/process/systemjs.config.js")
