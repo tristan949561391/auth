@@ -36,13 +36,13 @@ export class RegisterComponent {
             this.cantSendNow = true
             this.longLime = 60
             this.sendButtonTitle = '(' + this.longLime + 's)resend'
-            var timeLock = setInterval(()=> {
+            var countDown = setInterval(()=> {
                 this.longLime--
                 this.sendButtonTitle = '(' + this.longLime + 's)resend'
                 if (this.longLime == 0) {
                     this.sendButtonTitle = 'send'
                     this.cantSendNow = false
-                    window.clearInterval(timeLock)
+                    clearInterval(countDown)
                 }
             }, 1000)
         }

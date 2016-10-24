@@ -36,13 +36,13 @@ var RegisterComponent = (function () {
             this.cantSendNow = true;
             this.longLime = 60;
             this.sendButtonTitle = '(' + this.longLime + 's)resend';
-            var timeLock = setInterval(function () {
+            var countDown = setInterval(function () {
                 _this.longLime--;
                 _this.sendButtonTitle = '(' + _this.longLime + 's)resend';
                 if (_this.longLime == 0) {
                     _this.sendButtonTitle = 'send';
                     _this.cantSendNow = false;
-                    window.clearInterval(timeLock);
+                    clearInterval(countDown);
                 }
             }, 1000);
         }

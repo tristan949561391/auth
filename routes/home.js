@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var userService = require('../service/userService')
 var commonUtil = require('../util/commonUtil')
-
+var validateService = require('../service/valdateService')
 /* GET home page. */
 router.get('/', function (req, res, next) {
     var session = req.session
@@ -10,6 +10,22 @@ router.get('/', function (req, res, next) {
     session.time = new Date()
     res.render('index', {module: 'index'});
 });
+
+
+router.post('/sendVcode', function (req, res, next) {
+    var mobile = req.body.mobile
+    if (commonUtil.ISMOBILE(mobile)) {
+        validateService.sendAndSave(mobile, function (err, data) {
+            if (err) {
+                next(err)
+                return
+            }
+        })
+    }
+    var err = new Error('not mobile format')
+    err.status = 462
+    next(err)
+})
 
 
 router.post('/register', function (req, res, next) {
@@ -47,9 +63,9 @@ router.post('/login', function (req, res, next) {
             if (user != null) {
                 session.principle = user.id
                 session.user = user
-                var resJson={
-                    toUrl:toUrl,
-                    username:username
+                var resJson = {
+                    toUrl: toUrl,
+                    username: username
                 }
                 res.send(resJson)
                 return

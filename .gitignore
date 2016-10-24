@@ -2,10 +2,10 @@
 .idea
 node_modules
 build/out
-build
+/build
 /resource/.sass-cache/
 /typings/
 /resource/process/*/*.js
-**/*.css
-**/*.css.map
-**/*.js.map
+/**/*.css
+/**/*.css.map
+/**/*.js.map
