@@ -20,11 +20,15 @@ router.post('/sendVcode', function (req, res, next) {
                 next(err)
                 return
             }
+            res.send('send vcode success')
+            return
         })
+    } else {
+        var err = new Error('not mobile format')
+        err.status = 462
+        next(err)
     }
-    var err = new Error('not mobile format')
-    err.status = 462
-    next(err)
+
 })
 
 

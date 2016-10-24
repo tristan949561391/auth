@@ -23,7 +23,7 @@ function send(phone,callback) {
             'sms_template_code': 'SMS_12961487'
         },
         function () {
-            console.log('---------------send   '+code)
+            callback(null)
         })
 }
 
