@@ -2,5 +2,6 @@
   "462":"not mobile format",
   "463":"no such user",
   "464":"password not match",
-  "589":"param error",
+  "465":"send code too quick",
+  "589":"param error"
 }

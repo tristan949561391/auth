@@ -9,7 +9,6 @@
     "prefix": "session:"
   },
   "cookie": {
-    "domain": "localhost",
     "maxAge": 3600000,
     "path": "/",
     "httpOnly": true

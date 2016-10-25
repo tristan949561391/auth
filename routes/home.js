@@ -31,7 +31,6 @@ router.post('/sendVcode', function (req, res, next) {
 
 })
 
-
 router.post('/register', function (req, res, next) {
     var username = req.body.username
     var password = req.body.password

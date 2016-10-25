@@ -4,7 +4,6 @@
 var userModel = require('../modes/mongoose').userModel
 
 function register(username, password, callback) {
-
     userModel.findOne({username: username}, function (err, data) {
         if (data != null) {
             callback(new Error('username has already register'))
