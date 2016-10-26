@@ -18,8 +18,11 @@ export class RegisterComponent {
     cantSendNow = false
     longLime = null
     sendButtonTitle = 'send'
-    registerCode = ''
     countDown = null
+    password=''
+    passwordError=false
+    passwordConfirm=''
+    passwordConfirmError=false
     MOBILE_P = /(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/;
 
     constructor(private loginService: LoginService) {
@@ -31,6 +34,10 @@ export class RegisterComponent {
 
     validateMobile() {
         this.mobileError = !this.MOBILE_P.test(this.mobile)
+    }
+
+    validatePassword() {
+        this.passwordError = this.password.length<6
     }
 
     sendValidateCode() {
@@ -55,21 +62,31 @@ export class RegisterComponent {
         }
     }
 
-    getRegisterCode() {
-        if (this.registerCode.length == 0) {
-            this.registerCode = 'asdasdasdasd'
-            return
-        } else {
-            this.registerCode = ''
-            return
-        }
-    }
+
 
 
     stopCountDown() {
         this.sendButtonTitle = 'send'
         this.cantSendNow = false
         clearInterval(this.countDown)
+    }
+
+
+
+    getRegisterCode() {
+        this.validateMobile()
+       this.validateError=this.validateCode.length<6
+        this.validatePassword()
+        this.passwordConfirmError=this.password!=this.passwordConfirm||this.passwordConfirm.length<=6
+       if(this.mobileError||this.validateError||this.passwordError||this.passwordConfirmError){
+           alert("检查表单")
+           return
+       }
+       this.loginService.register(this.mobile,this.validateCode,this.password,(res)=>{
+           alert("注册成功")
+       },(err)=>{
+           alert("注册失败")
+       })
     }
 
 

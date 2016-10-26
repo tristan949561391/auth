@@ -14,7 +14,7 @@ var client = new TopClient({
 
 function send(phone, callback) {
     checkResend(phone, function (error) {
-        if(error){
+        if (error) {
             callback(error)
             return
         }
@@ -48,20 +48,37 @@ function save(code, mobile, callback) {
 
 
 function checkResend(mobile, callback) {
-    redisClient.multi().select(0).get("validatecode:"+mobile,function (err,data) {
-        if(err){
+    redisClient.multi().select(0).get("validatecode:" + mobile, function (err, data) {
+        if (err) {
             callback(err)
             return
         }
-        if(data==null||Date.now()-JSON.parse(data).date>=60000){
+        if (data == null || Date.now() - JSON.parse(data).date >= 60000) {
             callback()
             return
         }
-        err=new Error('send code too quick')
-        err.status=465
+        err = new Error('send code too quick')
+        err.status = 465
         callback(err)
     }).exec()
 }
 
 exports.sendAndSave = send
+
+
+function checkVcode(mobile, vcode, callback) {
+    redisClient.multi().select(0).get("validatecode:" + mobile, function (err, data) {
+        if (err || data == null || JSON.parse(data).code != vcode) {
+            err = new Error('vcode error')
+            err.status = 466
+            callback(err)
+            return
+        }
+        callback()
+    }).exec()
+}
+
+
+exports.checkVcode = checkVcode
+
 

@@ -26,4 +26,13 @@ export class LoginService {
         this.http.post(sendVcodeUrl,{mobile:mobile})
             .subscribe(data=>callbackSuccess(data),error=>callbackErr(error))
     }
+
+    register(mobile,vcode,password,callbackSuccess,callbackErr){
+        var registerUrl="/register"
+        this.http.post(registerUrl,{
+            username:mobile,
+            vcode:vcode,
+            password:password
+        }).subscribe(data=>callbackSuccess(data),error=>callbackErr(error))
+    }
 }

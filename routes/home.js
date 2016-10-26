@@ -28,25 +28,41 @@ router.post('/sendVcode', function (req, res, next) {
         err.status = 462
         next(err)
     }
-
 })
 
 router.post('/register', function (req, res, next) {
     var username = req.body.username
+    var vcode = req.body.vcode
     var password = req.body.password
-    if (commonUtil.NOTNULL(username) && commonUtil.NOTNULL(password)) {
-        userService.register(username, password, function (err) {
-            if (err) {
-                err.status = 286
-                next(err)
+    var session=req.session
+    if (commonUtil.NOTNULL(username) && commonUtil.NOTNULL(password) && commonUtil.NOTNULL(vcode)) {
+        validateService.checkVcode(username, vcode, function (error) {
+            if (error) {
+                next(error)
                 return
             }
-            res.end()
+            userService.register(username, password, function (err) {
+                if (err) {
+                    next(err)
+                    return
+                }
+                userService.loginUser(username,password,function (err,user) {
+                    if (user != null) {
+                        session.principle = user.id
+                        session.user = user
+                        res.send("register success")
+                        return
+                    }
+                    next(err)
+                    return
+                })
+                return
+            })
         })
         return
     }
-    var err = new Error('params is not lawful ');
-    err.status = 462
+    var err = new Error('param error ');
+    err.status = 589
     next(err)
 })
 

@@ -23,8 +23,11 @@ var RegisterComponent = (function () {
         this.cantSendNow = false;
         this.longLime = null;
         this.sendButtonTitle = 'send';
-        this.registerCode = '';
         this.countDown = null;
+        this.password = '';
+        this.passwordError = false;
+        this.passwordConfirm = '';
+        this.passwordConfirmError = false;
         this.MOBILE_P = /(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/;
     }
     RegisterComponent.prototype.formatMobile = function () {
@@ -32,6 +35,9 @@ var RegisterComponent = (function () {
     };
     RegisterComponent.prototype.validateMobile = function () {
         this.mobileError = !this.MOBILE_P.test(this.mobile);
+    };
+    RegisterComponent.prototype.validatePassword = function () {
+        this.passwordError = this.password.length < 6;
     };
     RegisterComponent.prototype.sendValidateCode = function () {
         var _this = this;
@@ -52,20 +58,25 @@ var RegisterComponent = (function () {
             });
         }
     };
-    RegisterComponent.prototype.getRegisterCode = function () {
-        if (this.registerCode.length == 0) {
-            this.registerCode = 'asdasdasdasd';
-            return;
-        }
-        else {
-            this.registerCode = '';
-            return;
-        }
-    };
     RegisterComponent.prototype.stopCountDown = function () {
         this.sendButtonTitle = 'send';
         this.cantSendNow = false;
         clearInterval(this.countDown);
+    };
+    RegisterComponent.prototype.getRegisterCode = function () {
+        this.validateMobile();
+        this.validateError = this.validateCode.length < 6;
+        this.validatePassword();
+        this.passwordConfirmError = this.password != this.passwordConfirm || this.passwordConfirm.length <= 6;
+        if (this.mobileError || this.validateError || this.passwordError || this.passwordConfirmError) {
+            alert("检查表单");
+            return;
+        }
+        this.loginService.register(this.mobile, this.validateCode, this.password, function (res) {
+            alert("注册成功");
+        }, function (err) {
+            alert("注册失败");
+        });
     };
     __decorate([
         core_1.Input(), 

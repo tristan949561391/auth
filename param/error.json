@@ -3,5 +3,7 @@
   "463":"no such user",
   "464":"password not match",
   "465":"send code too quick",
+  "466":"vcode error",
+  "467":"register because user exsit",
   "589":"param error"
 }

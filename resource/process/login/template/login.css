@@ -13,9 +13,4 @@ div.login-container {
 input:focus {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); }
 
-.modal-body .form-inline input {
-  width: 54%; }
-.modal-body .form-inline button {
-  width: 44%; }
-
 /*# sourceMappingURL=login.css.map */

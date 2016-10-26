@@ -6,7 +6,9 @@ var userModel = require('../modes/mongoose').userModel
 function register(username, password, callback) {
     userModel.findOne({username: username}, function (err, data) {
         if (data != null) {
-            callback(new Error('username has already register'))
+            err=new Error('username has already register')
+            err.status=467
+            callback(err)
             return
         }
         var user = new userModel(
@@ -20,7 +22,6 @@ function register(username, password, callback) {
 }
 module.exports.register = register
 
-
 function loginUser(username, password, callback) {
     userModel.findOne({username: username}, function (err,user) {
         if(err){
@@ -33,7 +34,6 @@ function loginUser(username, password, callback) {
             callback(err)
             return
         }
-
         if (password!=user.password){
             err=new Error('password not match')
             err.status=464
