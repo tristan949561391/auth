@@ -5,10 +5,7 @@ var commonUtil = require('../util/commonUtil')
 var validateService = require('../service/valdateService')
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    var session = req.session
-    var time = session.time
-    session.time = new Date()
-    res.render('index', {module: 'index'});
+    res.redirect('/login')
 });
 
 
@@ -29,6 +26,7 @@ router.post('/sendVcode', function (req, res, next) {
         next(err)
     }
 })
+
 
 router.post('/register', function (req, res, next) {
     var username = req.body.username
@@ -75,18 +73,14 @@ router.get('/login', function (req, res, next) {
 router.post('/login', function (req, res, next) {
     var username = req.body.username
     var password = req.body.password
-    var toUrl = req.body.toUrl
+    var toUrl = req.body.toUrl||"http://www.moondust.cc"
     var session = req.session
     if (commonUtil.NOTNULL(username) && commonUtil.NOTNULL(password)) {
         userService.loginUser(username, password, function (err, user) {
             if (user != null) {
                 session.principle = user.id
                 session.user = user
-                var resJson = {
-                    toUrl: toUrl,
-                    username: username
-                }
-                res.send(resJson)
+                res.redirect(toUrl)
                 return
             }
             next(err)

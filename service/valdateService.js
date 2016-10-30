@@ -2,7 +2,7 @@
  * Created by Tristan on 16/8/27.
  */
 var TopClient = require('../libs/aliMes/topClient').TopClient;
-var redisClient = require('../catch/redisclient')
+var redisClient = require('../cache/redisclient')
 var commonUtil = require('../util/commonUtil')
 
 var client = new TopClient({

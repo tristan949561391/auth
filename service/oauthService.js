@@ -3,7 +3,7 @@
  */
 var userModel = require('../modes/mode_user')
 var clientModel = require('../modes/mode_client')
-var redisClient = require('../catch/redisclient')
+var redisClient = require('../cache/redisclient')
 var commonUtil = require('../util/commonUtil')
 var uuid = require('node-uuid')
 var crypto = require('crypto')

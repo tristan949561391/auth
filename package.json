@@ -3,35 +3,18 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "tsc && concurrently \"tsc -w\"  \"node ./bin/www\" ",
+    "dev": "tsc && concurrently \"tsc -w\"  \"node ./bin/www\"  \"webpack -p -d --watch\"",
     "forever": "forever start ./bin/www",
     "start": "node ./bin/www",
     "clean": "node ./bin/clean",
     "build": " node ./bin/build",
     "zip": " node ./bin/zip",
-    "scp": "node ./bin/scp",
-    "lite": "lite-server",
-    "postinstall": "typings install",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "typings": "typings"
+    "scp": "node ./bin/scp"
   },
   "dependencies": {
-    "@angular/common": "~2.0.1",
-    "@angular/compiler": "~2.0.1",
-    "@angular/core": "~2.0.1",
-    "@angular/forms": "~2.0.1",
-    "@angular/http": "~2.0.1",
-    "@angular/platform-browser": "~2.0.1",
-    "@angular/platform-browser-dynamic": "~2.0.1",
-    "@angular/router": "~3.0.1",
-    "@angular/upgrade": "~2.0.1",
-    "angular-in-memory-web-api": "~0.1.1",
     "body-parser": "~1.15.1",
-    "bootstrap": "^3.3.7",
     "connect-redis": "^3.1.0",
     "cookie-parser": "^1.4.3",
-    "core-js": "^2.4.1",
     "crypto": "0.0.3",
     "debug": "~2.2.0",
     "express": "^4.14.0",
@@ -39,23 +22,14 @@
     "log4js": "^0.6.38",
     "mongoose": "^4.6.3",
     "morgan": "~1.7.0",
-    "ng2-bootstrap": "^1.1.14",
     "node-compass": "^0.2.4",
     "node-uuid": "^1.4.7",
     "pug": "^2.0.0-beta6",
     "redis": "^2.6.2",
-    "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-beta.12",
-    "systemjs": "0.19.39",
-    "urllib": "^2.17.0",
-    "zone.js": "^0.6.25"
+    "urllib": "^2.17.0"
   },
   "devDependencies": {
     "scp2": "^0.5.0",
-    "tar.gz": "^1.0.5",
-    "concurrently": "^3.0.0",
-    "lite-server": "^2.2.2",
-    "typescript": "^2.0.3",
-    "typings": "^1.4.0"
+    "tar.gz": "^1.0.5"
   }
 }

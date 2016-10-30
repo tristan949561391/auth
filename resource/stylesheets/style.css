@@ -1,13 +1,1 @@
-body {
-  background-color: #383838; }
-
-div.application div.loading {
-  position: fixed;
-  top: 50%;
-  left: 0;
-  right: 0;
-  text-align: center; }
-  div.application div.loading img {
-    width: 80px; }
-
-/*# sourceMappingURL=style.css.map */
+.login_box{margin:25% auto 0 auto}.login_box form{max-width:400px;margin:0 auto 0 auto}.login_box form button{width:45%}
