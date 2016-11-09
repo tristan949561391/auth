@@ -5,7 +5,11 @@ var commonUtil = require('../util/commonUtil')
 var validateService = require('../service/valdateService')
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.redirect('/login')
+    res.render('index')
+});
+
+router.get('/index.html', function (req, res, next) {
+    res.render('index')
 });
 
 
@@ -65,11 +69,6 @@ router.post('/register', function (req, res, next) {
 })
 
 
-router.get('/login', function (req, res, next) {
-    res.render('index', {module: 'login'});
-})
-
-
 router.post('/login', function (req, res, next) {
     var username = req.body.username
     var password = req.body.password
@@ -80,7 +79,10 @@ router.post('/login', function (req, res, next) {
             if (user != null) {
                 session.principle = user.id
                 session.user = user
-                res.redirect(toUrl)
+                var resData={
+                    href:toUrl
+                }
+                res.send(resData)
                 return
             }
             next(err)
@@ -92,7 +94,6 @@ router.post('/login', function (req, res, next) {
         next(err)
         return
     }
-
 })
 
 

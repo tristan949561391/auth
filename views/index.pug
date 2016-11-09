@@ -1,16 +1,11 @@
 extends layout/html
 
 block body
-    .container
-        .row
-            .login_box.col-md-12
-                form(role='form' action='/login' method='post')
-                    .form-group
-                        input.form-control.cricle-radus#loginname(type='text' placeholder='用户名或手机号...' name='username')
-                    .form-group
-                        input.form-control.cricle-radus#password(type='password' placeholder='输入密码...' name='password')
-                        input(type='hidden' name='tourl')
-                    .form-group
-                    button.btn.btn-success.pull-left.cricle-radus 登录
-                    button.btn.btn-warn.pull-right.cricle-radus 登录
+    app-root loading...
 block script
+    script(src='/inline.js')
+    script(src='/main.bundle.js')
+    script(src='/styles.bundle.js')
+    //script(src='http://localhost:4200/inline.js')
+    //script(src='http://localhost:4200/main.bundle.js')
+    //script(src='http://localhost:4200/styles.bundle.js')

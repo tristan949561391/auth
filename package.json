@@ -3,13 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "tsc && concurrently \"tsc -w\"  \"node ./bin/www\"  \"webpack -p -d --watch\"",
+    "dev": "node ./bin/www",
     "forever": "forever start ./bin/www",
     "start": "node ./bin/www",
     "clean": "node ./bin/clean",
     "build": " node ./bin/build",
     "zip": " node ./bin/zip",
-    "scp": "node ./bin/scp"
+    "scp": "node ./bin/scp",
+    "compass watch":"compass watch"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -22,7 +23,6 @@
     "log4js": "^0.6.38",
     "mongoose": "^4.6.3",
     "morgan": "~1.7.0",
-    "node-compass": "^0.2.4",
     "node-uuid": "^1.4.7",
     "pug": "^2.0.0-beta6",
     "redis": "^2.6.2",

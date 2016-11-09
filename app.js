@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
-var compass = require('node-compass')
 
 var home = require('./routes/home');
 var users = require('./routes/users');
@@ -38,9 +37,8 @@ app.use(session({
     cookie: config.cookie
 }));
 
-app.use(compass({project: path.join(__dirname, '/resource'), css: 'stylesheets', sass: 'stylesheets'}))
 
-app.use(express.static(path.join(__dirname, 'resource')));//process
+app.use(express.static(path.join(__dirname, 'resource/dist')));//process
 
 
 // app的配置 －－－end

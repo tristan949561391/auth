@@ -4,6 +4,7 @@
 var TopClient = require('../libs/aliMes/topClient').TopClient;
 var redisClient = require('../cache/redisclient')
 var commonUtil = require('../util/commonUtil')
+var userModel = require('../modes/mongoose').userModel
 
 var client = new TopClient({
     'appkey': '23317414',
@@ -13,24 +14,41 @@ var client = new TopClient({
 
 
 function send(phone, callback) {
-    checkResend(phone, function (error) {
-        if (error) {
-            callback(error)
+    userModel.findOne({username: phone}, function (err, data) {
+        if (err) {
+            err = new Error('unknow Error')
+            err.status = 500
+            callback(err)
             return
         }
-        var code = commonUtil.RADOMCODE(6)
-        client.execute('alibaba.aliqin.fc.sms.num.send',
-            {
-                'sms_type': 'normal',
-                'sms_free_sign_name': '网站插画分享服务',
-                'sms_param': '{\"code\":\"' + code + '\"}',
-                'rec_num': phone,
-                'sms_template_code': 'SMS_12961487'
-            },
-            function () {
-                save(code, phone, callback)
-            })
+
+        if (data != null) {
+            err = new Error('register because user exsit')
+            err.status = 467
+            callback(err)
+            return
+        }
+
+        checkResend(phone, function (error) {
+            if (error) {
+                callback(error)
+                return
+            }
+            var code = commonUtil.RADOMCODE(6)
+            client.execute('alibaba.aliqin.fc.sms.num.send',
+                {
+                    'sms_type': 'normal',
+                    'sms_free_sign_name': '网站插画分享服务',
+                    'sms_param': '{\"code\":\"' + code + '\"}',
+                    'rec_num': phone,
+                    'sms_template_code': 'SMS_12961487'
+                },
+                function () {
+                    save(code, phone, callback)
+                })
+        })
     })
+
 }
 
 function save(code, mobile, callback) {

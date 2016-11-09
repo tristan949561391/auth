@@ -1,6 +1,7 @@
 {
   "server": {
-    "port": 8888
+    "port": 8888,
+    "dev": true
   },
   "session": {
     "host": "172.82.183.154",

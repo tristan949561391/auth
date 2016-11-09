@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row login-container">
+      <i class="fa fa-address-card" aria-hidden="true"></i>
+        <div class="form-bottom col-lg-4 col-lg-offset-4 text-center login-box">
+            <form class="login-form" role="form" (submit)="false">
+                <div class="form-group" style="">
+                    <span class="error" *ngIf="usernameError.length>0">{{usernameError}}</span>
+                    <input #username class="cricle-radus form-username form-control "
+                           placeholder="用户名..."
+                           (focus)="usernameError=''"
+                           type="text">
+                </div>
+                <div class="form-group">
+                    <span class="error" *ngIf="passwordError.length>0">{{passwordError}}</span>
+                    <input #password class="cricle-radus form-password form-control"
+                           placeholder="密码..."
+                           (focus)="passwordError=''"
+                           type="password">
+                </div>
+                <div class="form-group ">
+                    <button *ngIf="loading==true" class="btn btn-danger cricle-radus disabled" type="submit" disabled>
+                        正在登录
+                    </button>
+                    <button *ngIf="loading==false" class="btn btn-danger cricle-radus" type="submit"
+                            (click)="submitLogin(username.value,password.value)">
+                      登录
+                    </button>
+                    <button class="btn btn-success  cricle-radus" (click)="registerModal.show()">注册</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div bsModal #registerModal="bs-modal" id="registerModal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="registerModule" [registerModal]="registerModal"></div>
+    </div>
+</div>
+

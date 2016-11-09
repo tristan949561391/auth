@@ -5,86 +5,89 @@ var outPath = 'build/auth'
 
 
 function build(config) {
-    var configDefaule = {
-        ignore: [
-            'node_modules',
-            'build',
-            'typings',
-            '*.ts',
-            '*.scss',
-            '*.js.map',
-            '*.less',
-            '*.sass',
-            'tsconfig.json',
-            'typings.json'
-        ]
-    }
+  var configDefaule = {
+    ignore: [
+      'node_modules',
+      'build',
+      'docs',
+      'typings',
+      'src',
+      'e2e',
+      '*.ts',
+      '*.scss',
+      '*.js.map',
+      '*.less',
+      '*.sass',
+      'tsconfig.json',
+      'typings.json'
+    ]
+  }
 
-    fs.mkdir(outPath, function () {
-        var filePath = path.resolve();
-        var toFilePath = path.join(filePath, outPath)
-        buildOutWebContent(filePath, toFilePath)
+  fs.mkdir(outPath, function () {
+    var filePath = path.resolve();
+    var toFilePath = path.join(filePath, outPath)
+    buildOutWebContent(filePath, toFilePath)
+  })
+
+
+  function buildOutWebContent(filePath, toFilePath) {
+    var files = fs.readdirSync(filePath)
+    files.forEach(function (fileName, index) {
+      var theFile = path.join(filePath, fileName)
+      var toFile = path.join(toFilePath, fileName)
+      if (haveToCopy(theFile, fileName)) {
+        if (!fs.statSync(theFile).isDirectory()) {
+          copyFile(theFile, toFile)
+        } else {
+          fs.mkdir(toFile, function () {
+            buildOutWebContent(theFile, toFile)
+          })
+        }
+      }
     })
+  }
 
 
-    function buildOutWebContent(filePath, toFilePath) {
-        var files = fs.readdirSync(filePath)
-        files.forEach(function (fileName, index) {
-            var theFile = path.join(filePath, fileName)
-            var toFile = path.join(toFilePath, fileName)
-            if (haveToCopy(theFile, fileName)) {
-                if (!fs.statSync(theFile).isDirectory()) {
-                    copyFile(theFile, toFile)
-                } else {
-                    fs.mkdir(toFile, function () {
-                        buildOutWebContent(theFile, toFile)
-                    })
-                }
-            }
-        })
+  function copyFile(from, to) {
+    fs.readFile(from, function (err, data) {
+      if (from.indexOf('package.json') >= 0) {
+        var package = JSON.parse(data);
+        delete package['devDependencies'];
+        data = JSON.stringify(package)
+      }
+      fs.writeFile(to, data, function (error) {
+        if (error) {
+          console.error('>copy ' + from + ' ' + to + ' error ')
+          console.error('>--because ' + error.message)
+        } else {
+          console.log('>copy ' + from + ' ' + to + ' ok')
+        }
+      })
+    })
+  }
+
+
+  function haveToCopy(filePath, filename) {
+    if (filename.startsWith('.')) {
+      return false
     }
 
-
-    function copyFile(from, to) {
-        fs.readFile(from, function (err, data) {
-            if (from.indexOf('package.json') >= 0) {
-                var package = JSON.parse(data);
-                delete package['devDependencies'];
-                data = JSON.stringify(package)
-            }
-            fs.writeFile(to, data, function (error) {
-                if (error) {
-                    console.error('>copy ' + from + ' ' + to + ' error ')
-                    console.error('>--because ' + error.message)
-                } else {
-                    console.log('>copy ' + from + ' ' + to + ' ok')
-                }
-            })
-        })
+    if (filename.indexOf('.dev.') >= 0) {
+      return false
+    }
+    for (var i in configDefaule.ignore) {
+      if (configDefaule.ignore[i] == filename) {
+        return false
+        break
+      }
+      if (configDefaule.ignore[i].startsWith('*') && filename.endsWith(configDefaule.ignore[i].replace('*', ''))) {
+        return false
+        break
+      }
     }
 
-
-    function haveToCopy(filePath, filename) {
-        if (filename.startsWith('.')) {
-            return false
-        }
-
-        if (filename.indexOf('.dev.') >= 0) {
-            return false
-        }
-        for (var i in configDefaule.ignore) {
-            if (configDefaule.ignore[i] == filename) {
-                return false
-                break
-            }
-            if(configDefaule.ignore[i].startsWith('*')&&filename.endsWith(configDefaule.ignore[i].replace('*',''))){
-                return false
-                break
-            }
-        }
-
-        return true
-    }
+    return true
+  }
 }
 
 

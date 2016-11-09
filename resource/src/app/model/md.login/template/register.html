@@ -1,0 +1,70 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" (click)="registerModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">欢迎注册</h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row register-container">
+                <div class="form-bottom col-lg-8 col-lg-offset-2 ">
+                    <form class="login-form" role="form" action="/sendVcode" method="post" (submit)="false">
+                        <div class="form-group">
+                            <span class="error" *ngIf="mobileError.length>0">{{mobileError}}</span>
+                            <input class="cricle-radus form-username form-control "
+                                   #mobile
+                                   name="mobile"
+                                   placeholder="输入手机号..."
+                                   maxlength="11"
+                                   (blur)="MOBILE_P.test(mobile.value.trim())?mobileError='':mobileError='输入手机号'"
+                                   type="text">
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="error" style="right: 100px;z-index: 100" *ngIf="validateCodeError.length>0">{{validateCodeError}}</span>
+                                <input class="cricle-radus form-control"
+                                       #validateCode
+                                       placeholder="验证码..."
+                                       maxlength="6"
+                                       type="text">
+                                <span class="input-group-btn">
+                              <button class="btn btn-warning cricle-radus" (click)="sendValidateCode(mobile.value)"
+                                      [disabled]="resend||sendLimit>0">验证码<span *ngIf="sendLimit>0">({{sendLimit}})</span></button>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="error" *ngIf="passwordError.length>0">{{passwordError}}</span>
+                            <input class="cricle-radus form-username form-control "
+                                   #password
+                                   placeholder="输入密码..."
+                                   maxlength="20"
+                                   (focus)="passwordError=passwordConfirmError=''"
+                                   (blur)="password.value.trim().length<6?passwordError='密码长度不合法':passwordError=''"
+                                   type="password">
+                        </div>
+
+                        <div class="form-group">
+                            <span class="error" *ngIf="passwordConfirmError.length>0">{{passwordConfirmError}}</span>
+                            <input class="cricle-radus form-username form-control "
+                                   #passwordConfirm
+                                   placeholder="确认密码..."
+                                   maxlength="20"
+                                   (focus)="passwordConfirmError=''"
+                                   (blur)="passwordConfirm.value.trim()==password.value.trim()?passwordConfirmError='':passwordConfirmError='两次密码不相同'"
+                                   type="password">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary cricle-radus" (click)="registerModal.hide()">取消</button>
+        <button *ngIf="!sending" type="button" class="btn btn-success cricle-radus" (click)="doRegiste(mobile.value,validateCode.value,password.value,passwordConfirm.value)">注册</button>
+        <button *ngIf="sending" type="button" class="btn btn-success cricle-radus disabled" disabled>注册中</button>
+    </div>
+</div>
+
+
