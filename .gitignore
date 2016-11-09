@@ -10,6 +10,7 @@ build/out
 /**/*.css.map
 /**/*.js.map
 /resource/node_modules
+/resource/dist
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
